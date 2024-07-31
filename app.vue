@@ -1,4 +1,3 @@
-<!-- app.vue -->
 <template>
   <div class="min-h-screen bg-blue-400">
     <Toast />
