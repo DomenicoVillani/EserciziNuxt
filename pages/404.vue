@@ -1,8 +1,29 @@
+<!-- pages/404.vue -->
 <template>
-    <div>
-        <h1>404 Not found. The page you are looking for does not exist.</h1>
+    <div class="min-h-screen flex items-center justify-center bg-red-400 text-white">
+      <h1>Errore 404: Pagina non trovata</h1>
+      cfbc
     </div>
-</template>
-
-<style>
-</style>
+  </template>
+  
+  <style>
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  .flex {
+    display: flex;
+  }
+  .items-center {
+    align-items: center;
+  }
+  .justify-center {
+    justify-content: center;
+  }
+  .bg-red-400 {
+    background-color: #f87171;
+  }
+  .text-white {
+    color: #ffffff;
+  }
+  </style>
+  

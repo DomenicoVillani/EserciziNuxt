@@ -24,13 +24,22 @@
   
   const currentQuestion = ref(0);
   const score = ref(0);
+  const value = ref(0);
   
   function selectOption(index) {
     if (index === questions.value[currentQuestion.value].answer) {
       score.value++;
+      value.value+=33
+      if(value.value===99){
+        value.value++
+      }
     }
     currentQuestion.value++;
   }
+
+  const reloadPage = () => {
+  window.location.reload();
+}
   </script>
 
 
@@ -38,32 +47,28 @@
 
 <template>
     <div>
-      <h1>Quiz</h1>
+      <div class="flex justify-content-center text-0 text-2xl"><h1>Quiz</h1></div>
       <div v-if="currentQuestion < questions.length">
-        <h2>{{ questions[currentQuestion].question }}</h2>
-        <div v-for="(option, index) in questions[currentQuestion].options" :key="index">
-          <button @click="selectOption(index)">
-            {{ option }}
-          </button>
+        <div class="flex justify-content-center text-0 text-2xl"><h2>{{ questions[currentQuestion].question }}</h2></div>
+        <div class="flex justify-content-center">
+          <div v-for="(option, index) in questions[currentQuestion].options" :key="index">
+            <Button :label="option" @click="selectOption(index)" class="mr-2 p-5"/>
+          </div>
         </div>
       </div>
       <div v-else>
-        <h2>Quiz completato!</h2>
-        <p>Hai risposto correttamente a {{ score }} su {{ questions.length }} domande.</p>
-        <div class="card flex justify-center">
-            <div v-if="score===0">
-                <Knob v-model="value" valueTemplate="0%" valueColor="SlateGray" rangeColor="MediumTurquoise"/>
+        <div class="flex justify-content-center text-0 text-2xl"><h2>Quiz completato!</h2></div>
+        <div class="flex justify-content-center"><p>Hai risposto correttamente a {{ score }} su {{ questions.length }} domande.</p></div>
+        <div class="card flex justify-content-center">
+            <div class="flex flex-column align-items-center">
+              <div>
+                  <Knob v-model="value" valueTemplate="{value}%" readonly/>
+              </div>
+              <div>
+                <div class="flex justify-content-center"><p>Vuoi rifare il quiz?</p></div>
+                <div class="flex justify-content-center"><Button label="Premi qui" @click="reloadPage()"/></div>
+              </div>
             </div>
-            <div v-else-if="score===1">
-                <Knob v-model="value" valueTemplate="33%" valueColor="SlateGray" rangeColor="MediumTurquoise" readonly/>
-            </div>
-            <div v-else-if="score===2">
-                <Knob v-model="value" valueTemplate="66%" valueColor="SlateGray" rangeColor="MediumTurquoise" readonly/>
-            </div>
-            <div v-else-if="score===3">
-                <Knob v-model="value" valueTemplate="100%" valueColor="SlateGray" rangeColor="MediumTurquoise" readonly/>
-            </div>
-            
         </div>
       </div>
     </div>
