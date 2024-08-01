@@ -12,37 +12,55 @@ const commenti = ref([
 ]);
 
 function addRec() {
-    commenti.value.push({ id: id++, stelle: value.value, text: text.value });
-    text.value = '';
-    value.value = 0;
+    if(value.value === 0){
+        commenti.value.push({ id: id++, stelle: 0, text: text.value });
+        text.value = '';
+    }
+    else{
+        commenti.value.push({ id: id++, stelle: value.value, text: text.value });
+        text.value = '';
+        value.value = 0;
+    }
 }
 
 </script>
 
 <template>
     <div>
-        <h1>Star Rating</h1>
-        <div class="card flex justify-center">
-            <form @submit.prevent="addRec">
-                <input v-model="text" required placeholder="Inserisci commento">
-                <Rating v-model="value" :stars="10" required/>
-                <p v-if="value > 0">Hai selezionato {{ value }} stelle</p>
-                <p v-else>Hai selezionato 0 stelle</p>
-                <button type="submit">Add</button>
-            </form>
+        <div class="flex justify-content-center m-6 text-0 text-2xl"><h1>Star Rating</h1></div>
+        <div class="flex flex-column">
+            <div class="flex flex-column">
+                <div class="flex justify-content-center mb-3">
+                    <FloatLabel>
+                        <InputText id="spesa" v-model="text" />
+                        <label for="spesa">Inserisci commento</label>
+                    </FloatLabel>
+                </div>
+                <div class="flex justify-content-center"><Rating v-model="value" :stars="10"/></div>
+                <div class="flex justify-content-center mb-3">
+                    <p v-if="value > 0">Hai selezionato {{ value }} stelle</p>
+                    <p v-else>Hai selezionato 0 stelle</p>
+                </div>
+            </div>
+            <div class="flex justify-content-center"><Button label="Aggiungi recensione" severity="success" @click="addRec" class="ml-3"/></div>
         </div>
     </div>
     <div>
-        <div>
+        <div class="flex justify-content-center text-0 text-2xl">
             <h1>Sezione Commenti</h1>
         </div>
-        <div>
-            <ul>
-                <li v-for="commento in commenti" :key="commento.id">
-                    <span>Commento: {{ commento.text }}</span>
-                    <span> - Stelle selezionate: {{ commento.stelle }}</span>
-                </li>
-            </ul>
+        <div class="flex justify-content-center pb-5">
+            <DataTable :value="commenti" tableStyle="width: 50rem">
+                <Column field="text" header="Commento"></Column>
+                <Column header="Stelle">
+                    <template #body="{ data }">
+                        <div class="star-rating">
+                            <i v-for="n in data.stelle" :key="n" class="pi pi-star-fill"></i>
+                            <span class="ml-2">{{ data.stelle }}/10</span>
+                        </div>
+                    </template>
+                </Column>
+            </DataTable>
         </div>
     </div>
 </template>

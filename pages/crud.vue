@@ -39,40 +39,55 @@ const search = computed(() => {
 
 <template>
     <div>
-        <div>
+        <div class="flex justify-content-center m-6 text-0 text-2xl">
             <h1>Crud</h1>
         </div>
-
-        <div>
-            <form @submit.prevent="addTodo">
-                <input v-model="newtodo" required placeholder="inserisci in lista">
-                <button>add</button>
-            </form>
-        </div>
-
-        <div>
-            <input v-model="searchName" placeholder="ricerca in lista">
-        </div>
-
-        <div v-if="editingTodo">
-            <h2>Modifica</h2>
-            <input v-model="editName" required placeholder="modifica nome">
-            <button @click="updateTodo">Aggiorna</button>
-            <button @click="editingTodo = null">Annulla</button>
-        </div>
-
-        <div>
-            <div v-if="search.length === 0 && searchName.length > 0">
-                <span>nessun risultato trovato</span>
+        <div class="flex flex-column">
+            <div class="flex flex-column">
+                <div class="flex justify-content-center">
+                    <FloatLabel>
+                        <InputText id="listaCrud" v-model="newtodo" />
+                        <label for="listaCrud">Inserisci nella lista</label>
+                    </FloatLabel>
+                    <Button label="Aggiungi alla lista" severity="success" @click="addTodo" class="ml-3"/>
+                </div>
+                <div class="flex justify-content-center mt-5">
+                    <FloatLabel>
+                        <InputText id="Ricerca" v-model="searchName" />
+                        <label for="Ricerca">Ricerca nella lista</label>
+                    </FloatLabel>
+                </div>
             </div>
-            <div v-else>
-                <ul>
-                    <li v-for="todo in search" :key="todo.id">
-                        <span>{{ todo.nome }}</span>
-                        <button @click="startEditing(todo)">Edit</button>
-                        <button @click="removeTodo(todo)">Remove</button>
-                    </li>
-                </ul>
+    
+            <div v-if="editingTodo" class="flex flex-column">
+                <div class="flex justify-content-center text-0 text-2xl"><h2>Modifica</h2></div>
+                <div>
+                    <div class="flex justify-content-center">
+                        <FloatLabel>
+                            <InputText id="Modifica" v-model="editName" />
+                            <label for="Modifica">Modifica elemento</label>
+                        </FloatLabel>
+                    </div>
+                    <div class="flex justify-content-center mt-5">
+                        <Button label="Aggiorna" severity="success"  @click="updateTodo" class="ml-3"/>
+                        <Button label="Annulla" severity="danger" @click="editingTodo = null" class="ml-3"/>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="flex justify-content-center">
+                <div v-if="search.length === 0 && searchName.length > 0">
+                    <span class="text-0 text-2xl">nessun risultato trovato</span>
+                </div>
+                <div v-else>
+                    <ul class="list-none">
+                        <li v-for="todo in search" :key="todo.id">
+                            <span class="text-0 text-2xl">{{ todo.nome }}</span>
+                            <Button @click="startEditing(todo)" icon="pi pi-pencil"/>
+                            <Button @click="removeTodo(todo)" icon="pi pi-trash"/>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

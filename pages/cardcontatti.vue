@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from 'vue';
 
 const props = defineProps({
     contatti: Array
@@ -8,33 +7,31 @@ const props = defineProps({
 
 <template>
     <h1 class="text">Lista Contatti</h1>
-    <div class="card-div">
-        <div v-for="(contatto, index) in contatti" :key="index" class="card">
-            <h2>{{ contatto.nome }} {{ contatto.cognome }}</h2>
-            <p>Età : {{ contatto.eta }} Sesso: {{ contatto.sesso }}</p>
-            <p>Indirizzo: {{ contatto.indirizzo }}</p>
+    <div class="grid">
+        <div v-for="(contatto, index) in contatti" :key="index" class="col-12 sm:col-6 md:col-3">
+            <Card class="card mx-5">
+                <template #title>{{ contatto.nome }} {{ contatto.cognome }}</template>
+                <template #content>
+                    <p class="m-0">Età: {{ contatto.eta }} Sesso: {{ contatto.sesso }}</p>
+                    <p class="m-0">Indirizzo: {{ contatto.indirizzo }}</p>
+                </template>
+            </Card>
         </div>
     </div>
 </template>
 
 <style scoped>
-.text{
+.text {
     text-align: center;
     margin-top: 5%;
 }
-.card-div{
-    display: flex;
-    margin: 5%;
-    flex-wrap: wrap;
+.card {
+    padding: 1rem;
+    box-sizing: border-box;
 }
-.card{
-    border: 2px solid white;
-    margin: 1%;
-    padding: 2%;
-}
-.card:hover{
+.card:hover {
     cursor: pointer;
-    -webkit-box-shadow: 15px 14px 22px 12px rgba(23,36,255,0.75); 
-    box-shadow: 15px 14px 22px 12px rgba(23,36,255,0.75);
+    -webkit-box-shadow: 15px 14px 22px 12px rgba(84, 89, 196, 0.75);
+    box-shadow: 15px 14px 22px 12px rgba(93, 99, 214, 0.75);
 }
 </style>

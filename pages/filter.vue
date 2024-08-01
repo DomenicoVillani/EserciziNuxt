@@ -31,27 +31,32 @@ const filteredList = computed(() => {
 
 <template>
     <div>
-        <div>
+        <div class="flex justify-content-center m-5 text-2xl text-0">
             <h1>Filter</h1>
         </div>
-        
-        <div>
-            <form @submit.prevent="addElem">
-                <input v-model="newElemList" required placeholder="Aggiungi elementi alla lista">
-                <button type="submit">Add</button>
-            </form>
-            <form id="search" @submit.prevent>
-                <input name="query" v-model="filtered" placeholder="Ricerca elementi alla lista">
-            </form>
+        <div class="flex flex-column">
+            <div class="flex justify-content-center">
+                <FloatLabel>
+                    <InputText id="elemento" v-model="newElemList" />
+                    <label for="elemento">Aggiungi elementi alla lista</label>
+                </FloatLabel>
+                <Button label="Aggiungi" severity="success" @click="addElem" class="ml-3" :disabled="oggetto == ''"/>
+            </div>
+            <div class="flex justify-content-center mt-5">
+                <FloatLabel>
+                    <InputText id="elemento" v-model="filtered" />
+                    <label for="elemento">Cerca nella lista</label>
+                </FloatLabel>
+            </div>
         </div>
-        <div>
-            <ul v-if="filteredList.length">
-                <li v-for="elementi in filteredList" :key="elementi.id">
-                    <span>{{ elementi.text }}</span>
-                    <button @click="RemoveElem(elementi)">❌</button>
+        <div class="flex justify-content-center">
+            <ul v-if="filteredList.length" class="list-none">
+                <li v-for="elementi in filteredList" :key="elementi.id"  class="mt-3" >
+                    <span class="mx-5 text-2xl">{{ elementi.text }}</span>
+                    <Button @click="RemoveElem(elementi)" label="Rimuovi"/>
                 </li>
             </ul>
-            <p v-else>La ricerca non ha dato elementi</p>
+            <p v-else class="text-2xl">La ricerca non ha dato elementi</p>
         </div>
     </div>
 </template>

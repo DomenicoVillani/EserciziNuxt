@@ -40,6 +40,7 @@ const contatti = ref([
 ]);
 
 function addPerson(){
+    if(newNome.value === '' || newCognome.value === '' || newEta.value === '' || newSesso.value === '' || newIndirizzo.value === '') return
     contatti.value.push({nome:newNome.value , cognome:newCognome.value, eta:newEta.value, sesso:newSesso.value, indirizzo:newIndirizzo.value})
     newNome.value = ''
     newCognome.value = ''
@@ -52,23 +53,41 @@ function addPerson(){
 
 <template>
     <div>
-        <div>
-            Aggiungi contatti
+        <div class="flex justify-content-center m-6 text-0 text-2xl">
+            <h1>Aggiungi contatti</h1>
         </div>
-        
-        <div>
-            <form @submit.prevent="addPerson">
-                <input v-model="newNome" required placeholder="inserisci nome">
-                <input v-model="newCognome" required placeholder="inserisci cognome"> 
-                <input type="number" v-model="newEta" required placeholder="inserisci eta">
-                <input v-model="newSesso" required placeholder="inserisci sesso">
-                <input v-model="newIndirizzo" required placeholder="inserisci indirizzo">
-                <button> add</button>
-            </form>
+        <div class="flex justify-content-center">
+            <FloatLabel>
+                <InputText id="nome" v-model="newNome" />
+                <label for="nome">Inserisci nome</label>
+            </FloatLabel>
+            <FloatLabel>
+                <InputText id="cognome" v-model="newCognome" />
+                <label for="cognome">Inserisci cognome</label>
+            </FloatLabel>
+            <FloatLabel>
+                <InputNumber
+                        v-model="newEta"
+                        placeholder="inserisci età"
+                        :min="1"
+                        mode="decimal"
+                        class="p-mb-2"
+                        id="eta"
+                    />
+                <label for="eta">Inserisci età</label>
+            </FloatLabel>
+            <FloatLabel>
+                <InputText id="sesso" v-model="newSesso" />
+                <label for="sesso">Inserisci sesso</label>
+            </FloatLabel>
+            <FloatLabel>
+                <InputText id="indirizzo" v-model="newIndirizzo" />
+                <label for="indirizzo">Inserisci indirizzo</label>
+            </FloatLabel>
+            <Button label="Aggiungi persona" severity="success" @click="addPerson" class="ml-3" :disabled="oggetto == ''"/>
         </div>
     </div>
     <div>
-        <div>Lista contatti</div>
         <div>
             <cardcontatti :contatti="contatti" />
         </div>
